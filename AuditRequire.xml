@@ -88,7 +88,7 @@
     &sql(DECLARE PropertyOldCur CURSOR FOR 
          SELECT  Name, Cardinality, Collection, Parameters, Parent,Private, Required
          FROM Branch1.AuditFields
-         WHERE Parent=:ClassName)
+         WHERE Parent = :ClassName)
     &sql(OPEN PropertyOldCur)
     
     
