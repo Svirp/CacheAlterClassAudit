@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-08-06 21:59:31">
+<Class name="Branch1.AuditRequire">
+<Abstract>1</Abstract>
+<TimeChanged>64501,79138.187951</TimeChanged>
+<TimeCreated>64485,58538.133042</TimeCreated>
+
+<UDLText name="T">
+<Content><![CDATA[
+// toDo Добавить при CreateClass
+
+]]></Content>
+</UDLText>
+
+<UDLText name="T">
+<Content><![CDATA[
+// изменение комментариев в методе v почему-то регистрируется 
+
+]]></Content>
+</UDLText>
+
+<Method name="OnCompile">
+<ClassMethod>1</ClassMethod>
+<CodeMode>objectgenerator</CodeMode>
+<ForceGenerate>1</ForceGenerate>
+<Implementation><![CDATA[
+  s ClassHashOld=0, ClassHash=0,ClassName=0, ^dbg=0 
+  // определяем новое значение хэша
+  s ClassName=%class.Name
+  s ClassHash=$$$comClassKeyGet(ClassName,$$$cCLASShash)
+  // старое значение хэша считываем из подготовленной таблицы
+  s ClassHashOld = ##class(Branch1.AuditRequire).SelectHashFromTableLog(ClassName) // Напрямую (без вызова метода) чет не работает
+  s ^temp=ClassHash, ^temp1=ClassHashOld
+  if ClassHash'=ClassHashOld
+  {
+    // обновляем запись
+    d ##class(Branch1.AuditRequire).DeleteTableLog(ClassName)  // Напрямую (без вызова метода) чет не работает
+    s at = ##class(Branch1.AuditTable).%New() // А вот ObjectScript работет
+    s at.TableName=ClassName, at.Hash=ClassHash
+    d at.%Save()
+    
+    // генерим событие для аудита
+    s info = "Alter class "_ClassName
+    
+    //
+    d $SYSTEM.Security.Audit("UserAudit","ClassAudit","Alter class",info,info)
+    s info=  ##class(Branch1.AuditRequire).FieldChangesAnalyze(ClassName)  
+    d $SYSTEM.Security.Audit("UserAudit","ClassAudit","Alter class",info,info)
+    
+    //для отладки  
+    s ^dbg=1
+  }
+  else
+  {
+    s ^dbg=999
+  }
+  //newj
+]]></Implementation>
+</Method>
+
+<Method name="SelectHashFromTableLog">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>FieldName:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+   s ClassHashOld=""
+   &sql(SELECT Hash INTO :ClassHashOld FROM Branch1.AuditTable WHERE TableName = :FieldName)
+   return ClassHashOld
+]]></Implementation>
+</Method>
+
+<Method name="DeleteTableLog">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>FieldName:%String</FormalSpec>
+<Implementation><![CDATA[   &sql(DELETE FROM Branch1.AuditTable WHERE TableName = :FieldName)
+]]></Implementation>
+</Method>
+
+<Method name="FieldChangesAnalyze">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>ClassName:%String</FormalSpec>
+<ReturnType>%String</ReturnType>
+<Implementation><![CDATA[
+   // s ClassName="Branch1.Costumers"
+   s AuditInfo=""
+  
+      // создаем курсор для старого  значения (будем брать из подгатовленной таблицы)
+    &sql(DECLARE PropertyOldCur CURSOR FOR 
+         SELECT  Name, Cardinality, Collection, Parameters, Parent,Private, Required
+         FROM Branch1.AuditFields
+         WHERE Parent=:ClassName)
+    &sql(OPEN PropertyOldCur)
+    
+    
+    // создаем курсор для текущего значения (из таблицы CompiledProperty)
+    &sql(DECLARE PropertyCur CURSOR FOR
+         SELECT  Name, Cardinality, Collection, Parameters, Parent,Private, Required
+         FROM  %Dictionary.CompiledProperty
+         WHERE Parent=:ClassName)
+    &sql(OPEN PropertyCur)
+   
+    s i=0
+    // работаем с данными
+       
+    s NewName="", NewCardinallity="",NewCollection="", NewParameters="", NewParent="", NewPrivate="", NewRequired=""
+    s OldName="", OldCardinallity="",OldCollection="", OldParameters="", OldParent="", OldPrivate="", OldRequired=""
+    while 1
+    {
+      // ранее параметры были сгруппированны в классы, но FETCH как-то странно себя вел
+      &sql(FETCH PropertyCur INTO  :NewName, :NewCardinallity, :NewCollection,
+                                  :NewParameters, :NewParent, :NewPrivate, :NewRequired)  
+      if SQLCODE=100
+      {
+      while 1
+        {
+          &sql(DELETE FROM Branch1.AuditFields WHERE CURRENT OF PropertyOldCur)
+          set AuditInfo=AuditInfo_" delete field"_OldName
+          &sql(FETCH PropertyOldCur INTO  :OldName, :OldCardinallity, :OldCollection,
+                                  :OldParameters, :OldParent, :OldPrivate, :OldRequired) 
+          if SQLCODE'=0 GOTO ExitLoop //выход из двойного цикла,=> применение goto оправдано (проверка еще одного условия снизит производительность)
+        } 
+      }  
+                                                               
+      &sql(FETCH PropertyOldCur INTO  :OldName, :OldCardinallity, :OldCollection,
+                                  :OldParameters, :OldParent, :OldPrivate, :OldRequired) 
+      if SQLCODE=100
+      {
+        while 1
+        {
+          &sql(INSERT INTO Branch1.AuditFields(Name, Cardinality, Collection, Parameters, Parent,Private, Required)
+               VALUES(:NewName, :NewCardinallity, :NewCollection, :NewParameters, :NewParent, :NewPrivate, :NewRequired))
+          set AuditInfo=AuditInfo_"added new  field "_NewName
+          &sql(FETCH PropertyCur INTO  :NewName, :NewCardinallity, :NewCollection,
+                                  :NewParameters, :NewParent, :NewPrivate, :NewRequired)  
+          if SQLCODE'=0 GOTO ExitLoop //выход из двойного цикла,=> применение goto оправдано (проверка еще одного условия снизит производительность)
+        } 
+      }
+      
+      if NewName'=OldName
+      {
+        if AlphabetOrder(NewName,OldName)
+        {
+          while AlphabetOrder(NewName,OldName)
+          { 
+             &sql(INSERT INTO Branch1.AuditFields(Name, Cardinality, Collection, Parameters, Parent,Private, Required)
+               VALUES(:NewName, :NewCardinallity, :NewCollection, :NewParameters, :NewParent, :NewPrivate, :NewRequired))
+             set AuditInfo=AuditInfo_"added new  field "_NewName
+             &sql(FETCH PropertyCur INTO  :NewName, :NewCardinallity, :NewCollection,
+                                  :NewParameters, :NewParent, :NewPrivate, :NewRequired)  
+             if SQCLODE'=0 QUIT   
+          }
+        }
+        else
+        {
+          while AlphabetOrder(OldName,NewName)
+          {
+            &sql(DELETE FROM Branch1.AuditFields WHERE CURRENT OF PropertyOldCur)
+            set AuditInfo=AuditInfo_" delete field"_OldName
+            &sql(FETCH PropertyOldCur INTO  :OldName, :OldCardinallity, :OldCollection,
+                                  :OldParameters, :OldParent, :OldPrivate, :OldRequired) 
+            if SQCLODE'=0 QUIT
+          }
+        }
+        
+      }                            
+    }
+ExitLoop
+    &sql(ClOSE PropertyOldCur)
+    &sql(ClOSE PropertyCur)
+    return AuditInfo
+]]></Implementation>
+</Method>
+
+<Method name="AlphabetOrder">
+<ClassMethod>1</ClassMethod>
+<FormalSpec>string1:%CacheString,string2:%CacheString</FormalSpec>
+<ReturnType>%Boolean</ReturnType>
+<Implementation><![CDATA[
+   for i=1:1:$length(string1)
+   {
+     if $ASCII(string1,i)<$ASCII(string2,i)
+       {return 1}
+     elseif $ASCII(string1,i)>$ASCII(string2,i)
+       {return 0}
+   }  
+   if $length(string1)<$length(string2)
+     {return 1}
+   else {return 0}
+]]></Implementation>
+</Method>
+</Class>
+</Export>
