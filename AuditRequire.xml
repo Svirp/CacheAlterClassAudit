@@ -49,7 +49,7 @@
     s AuditInfo = AuditInfo_##class(Branch1.AuditRequire).FieldChangesAnalyze(ClassName)
     // для отладки
     s ^AuditClassInfo=AuditInfo
-    // генерируим событие аудита
+    // генерируем событие аудита
     d $SYSTEM.Security.Audit("UserAudit","ClassAudit","Alter class",AuditInfo,AuditInfo)   
     //для отладки  
   }
