@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-08-23 21:08:24">
+<Class name="Branch1.Suppliers">
+<Super>%Persistent,Branch1.AuditRequire</Super>
+<TimeChanged>64518,75183.871805</TimeChanged>
+<TimeCreated>64485,60282.400251</TimeCreated>
+
+<Property name="Organisation">
+<Type>%String</Type>
+</Property>
+
+<Property name="ResponsiblePerson">
+<Type>%String</Type>
+</Property>
+
+<UDLText name="T">
+<Content><![CDATA[
+// 1
+
+]]></Content>
+</UDLText>
+
+<Property name="Data">
+<Type>%String</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Branch1.SuppliersD</DataLocation>
+<DefaultData>SuppliersDefaultData</DefaultData>
+<IdLocation>^Branch1.SuppliersD</IdLocation>
+<IndexLocation>^Branch1.SuppliersI</IndexLocation>
+<StreamLocation>^Branch1.SuppliersS</StreamLocation>
+<Data name="SuppliersDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>Organisation</Value>
+</Value>
+<Value name="3">
+<Value>Responsiple</Value>
+</Value>
+<Value name="4">
+<Value>Data</Value>
+</Value>
+<Value name="5">
+<Value>ResponsiblePerson</Value>
+</Value>
+<Value name="6">
+<Value>Data1</Value>
+</Value>
+<Value name="7">
+<Value>ResponsiblePerson1</Value>
+</Value>
+<Value name="8">
+<Value>Organisation1</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+</Export>

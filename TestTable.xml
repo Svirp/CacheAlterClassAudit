@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-08-23 21:08:17">
+<Class name="Branch1.TestTable">
+<Super>%Persistent,Branch1.AuditRequire</Super>
+<TimeChanged>64518,75001.280924</TimeChanged>
+<TimeCreated>64503,75411.634852</TimeCreated>
+
+<Property name="FirstName">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="Period">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="Period1">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="Period2">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="SecondName">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="SomeField">
+<Type>%CacheString</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Branch1.TestTableD</DataLocation>
+<DefaultData>TestTableDefaultData</DefaultData>
+<IdLocation>^Branch1.TestTableD</IdLocation>
+<IndexLocation>^Branch1.TestTableI</IndexLocation>
+<StreamLocation>^Branch1.TestTableS</StreamLocation>
+<Data name="TestTableDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>FirstName</Value>
+</Value>
+<Value name="3">
+<Value>SecondName</Value>
+</Value>
+<Value name="4">
+<Value>SomeField</Value>
+</Value>
+<Value name="5">
+<Value>Period</Value>
+</Value>
+<Value name="6">
+<Value>Period1</Value>
+</Value>
+<Value name="7">
+<Value>Period2</Value>
+</Value>
+<Value name="8">
+<Value>SomeField1</Value>
+</Value>
+<Value name="9">
+<Value>FirstName1</Value>
+</Value>
+<Value name="10">
+<Value>Sazaza</Value>
+</Value>
+<Value name="11">
+<Value>Sazaza1</Value>
+</Value>
+<Value name="12">
+<Value>SecondName1</Value>
+</Value>
+<Value name="13">
+<Value>NewField</Value>
+</Value>
+<Value name="14">
+<Value>NewField1</Value>
+</Value>
+<Value name="15">
+<Value>Zzzzz</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+</Export>

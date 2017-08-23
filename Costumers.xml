@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-08-23 21:08:05">
+<Class name="Branch1.Costumers">
+<Super>%Persistent,Branch1.AuditRequire</Super>
+<TimeChanged>64495,77354.404598</TimeChanged>
+<TimeCreated>64485,60547.399566</TimeCreated>
+
+<Property name="name">
+<Type>%String</Type>
+</Property>
+
+<Property name="organisation">
+<Type>%String</Type>
+</Property>
+
+<Property name="DeliveryMode">
+<Type>%String</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Branch1.CostumersD</DataLocation>
+<DefaultData>CostumersDefaultData</DefaultData>
+<IdLocation>^Branch1.CostumersD</IdLocation>
+<IndexLocation>^Branch1.CostumersI</IndexLocation>
+<StreamLocation>^Branch1.CostumersS</StreamLocation>
+<Data name="CostumersDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>name</Value>
+</Value>
+<Value name="3">
+<Value>organisation</Value>
+</Value>
+<Value name="4">
+<Value>DeliveryMode</Value>
+</Value>
+<Value name="5">
+<Value>DeliveryMode1</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+</Export>
