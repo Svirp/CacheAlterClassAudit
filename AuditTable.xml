@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-08-23 21:08:01">
+<Class name="Branch1.AuditTable">
+<Super>%Persistent</Super>
+<TimeChanged>64494,68007.765672</TimeChanged>
+<TimeCreated>64485,78156.221521</TimeCreated>
+
+<Property name="TableName">
+<Type>%String</Type>
+</Property>
+
+<Property name="Hash">
+<Type>%CacheString</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Branch1.AuditTableD</DataLocation>
+<DefaultData>AuditTableDefaultData</DefaultData>
+<IdLocation>^Branch1.AuditTableD</IdLocation>
+<IndexLocation>^Branch1.AuditTableI</IndexLocation>
+<StreamLocation>^Branch1.AuditTableS</StreamLocation>
+<Data name="AuditTableDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>TableName</Value>
+</Value>
+<Value name="3">
+<Value>Hash</Value>
+</Value>
+<Value name="4">
+<Value>%Id</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+</Export>

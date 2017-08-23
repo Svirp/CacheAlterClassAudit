@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2017.1 (Build 792U)" ts="2017-08-23 21:07:49">
+<Class name="Branch1.AuditFields">
+<Super>%Persistent</Super>
+<TimeChanged>64518,69556.094879</TimeChanged>
+<TimeCreated>64485,76033.876233</TimeCreated>
+
+<UDLText name="T">
+<Content><![CDATA[
+// Property Name As %Dictionary.CacheIdentifier [ Required ];
+
+]]></Content>
+</UDLText>
+
+<Property name="Name">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="Cardinality">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="Collection">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="Parameters">
+<Type>%CacheString</Type>
+<Collection>array</Collection>
+</Property>
+
+<Property name="Parent">
+<Type>%CacheString</Type>
+</Property>
+
+<Property name="Private">
+<Type>%Boolean</Type>
+</Property>
+
+<Property name="Required">
+<Type>%Boolean</Type>
+</Property>
+
+<Property name="Type">
+<Type>%Dictionary.CacheClassname</Type>
+</Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^Branch1.AuditFieldsD</DataLocation>
+<DefaultData>AuditFieldsDefaultData</DefaultData>
+<IdLocation>^Branch1.AuditFieldsD</IdLocation>
+<IndexLocation>^Branch1.AuditFieldsI</IndexLocation>
+<StreamLocation>^Branch1.AuditFieldsS</StreamLocation>
+<Data name="AuditFieldsDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>name</Value>
+</Value>
+<Value name="3">
+<Value>Name</Value>
+</Value>
+<Value name="4">
+<Value>Parametres</Value>
+</Value>
+<Value name="5">
+<Value>Cardinality</Value>
+</Value>
+<Value name="6">
+<Value>Collection</Value>
+</Value>
+<Value name="7">
+<Value>Parameters</Value>
+</Value>
+<Value name="8">
+<Value>Private</Value>
+</Value>
+<Value name="9">
+<Value>Required</Value>
+</Value>
+<Value name="10">
+<Value>Parent</Value>
+</Value>
+<Value name="11">
+<Value>Type</Value>
+</Value>
+</Data>
+</Storage>
+</Class>
+</Export>
